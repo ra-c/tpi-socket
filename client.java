@@ -2,11 +2,23 @@ import java.io.*;
 import java.net.*;
 
 public class client {
+
     public static void main(String[] args) throws IOException {
+        String hostName;
+        int portNumber;
 
-        String hostName = "localhost";
-        int portNumber = 5001;
+        if (args.length == 1){
+            portNumber = Integer.parseInt(args[0]);
+            hostName = "localhost";
+        } else if (args.length >= 2){
+            portNumber = Integer.parseInt(args[0]);
+            hostName = args[1];
+        } else{
+            hostName = "localhost";
+            portNumber = 5244;
+        }
 
+        System.out.println("Tentativo di connessione al server su " + hostName + " alla porta " + portNumber +".");
         try (
             Socket echoSocket = new Socket(hostName, portNumber);
         		
@@ -19,19 +31,24 @@ public class client {
         		
             BufferedReader stdIn =
                 new BufferedReader(
-                    new InputStreamReader(System.in))
-                
+                    new InputStreamReader(System.in));
         ) {
+            System.out.println("Connessione al server effettuata." );
             String userInput, rispostaServer;
             while ((rispostaServer = in.readLine()) != null) {
-                System.out.println(rispostaServer);
-                
-                userInput = stdIn.readLine();
-                if(userInput != null)
+                System.out.println("[" + hostName + "] " + rispostaServer);
+                if(rispostaServer.contains("Chiusura..."))
                 {
-                	out.println(userInput);
+                    break;
                 }
+                do {
+                    System.out.print("> ");
+                    userInput = stdIn.readLine();
+                } while((userInput.trim().isEmpty()));
+
+                out.println(userInput);
             }
+
         } catch (UnknownHostException e) {
             System.err.println("Host sconosciuto");
             System.exit(1);
