@@ -22,8 +22,8 @@ public class server {
         ) {
             String inputLine, outputLine;
             protocol p = new protocol();
+            out.println("Inserisci operazione");
             while ((inputLine = in.readLine()) != null) {
-            	out.println("we");
             	outputLine = p.elabora(inputLine);
                 out.println(outputLine);
             }
