@@ -2,7 +2,7 @@ import java.util.regex.*;
 import java.math.*;
 public class CalcolatriceProtocol {
 	//Niente domande.
-	Pattern p = Pattern.compile("(?<intero1>\\d+)\\.?(?<decimale1>\\d*)(?<operatore>[-+*/])(?<intero2>\\d+)\\.?(?<decimale2>\\d*)");
+	Pattern p = Pattern.compile("^(?<intero1>[-+]?\\d+)\\.?(?<decimale1>\\d*)(?<operatore>[-+*/])(?<intero2>[-+]?\\d+)\\.?(?<decimale2>\\d*)$");
 	//							^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	//							Pattern per espressioni regolari. Serve a verificare che in input sia inserita un'operazione valida (come ad esempio 2+2) e ignora spazi messi a caso
 	public String elabora(String input)
@@ -12,7 +12,7 @@ public class CalcolatriceProtocol {
 		}											//	ed esci dalla funzione
 
 		String output;
-		input.replaceAll("\\s","");  //rimuove tutti gli spazi dalla stringa di input
+		input = input.replaceAll("\\s","");  //rimuove tutti gli spazi dalla stringa di input
 		Matcher m = p.matcher(input);	//Oggetto creato per verificare se la stringa inserita rispetta il pattern (cioè quella cosa lunghissima sopra)
 		if(m.find()) {
 			if (m.group("decimale1").isEmpty() && m.group("decimale2").isEmpty()) {		//if: controlla se entrambi i numeri inseriti sono interi (cioè senza parte decimale)
