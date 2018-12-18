@@ -20,14 +20,14 @@ public class CalcolatriceClient {
 
         System.out.println("Tentativo di connessione al server su " + hostName + " alla porta " + portNumber +".");
         try (
-            Socket socket = new Socket(hostName, portNumber);           //
-        		                                                            //
+            Socket socket = new Socket(hostName, portNumber);               //
+                                                                            //
             PrintWriter out =                                               //
-                new PrintWriter(socket.getOutputStream(), true);        //      Istanzio socket e le varie classi per input/output
+                new PrintWriter(socket.getOutputStream(), true);            //      Istanzio socket e le varie classi per input/output
         		                                                            //      Da notare come tutto sia scritto dentro un try()
             BufferedReader in =                                             //      In questo modo le risorse vengono automaticamente
                 new BufferedReader(                                         //      rilasciate quando il codice tra parentesi graffe {} termina
-                    new InputStreamReader(socket.getInputStream()));    //
+                    new InputStreamReader(socket.getInputStream()));        //
         		                                                            //      Il socket si chiude quindi automaticamente e non serve socket.close()
             BufferedReader stdIn =                                          //
                 new BufferedReader(                                         //
@@ -36,7 +36,7 @@ public class CalcolatriceClient {
             System.out.println("Connessione al server effettuata." );
             String userInput, rispostaServer;
             while ((rispostaServer = in.readLine()) != null) {                  //  Resta nel ciclo while fin quando la stringa che riceve dal server è uguale a null
-                System.out.println("[" + hostName + "] " + rispostaServer);     //  Perchè quando la stringa risposta del server è null significa che la connessione è terminata.
+                System.out.println("[" + hostName + "] " + rispostaServer);     //  Perchè quando la stringa della risposta del server è null significa che il server ha terminato la connessione.
                 if(rispostaServer.contains("Chiusura..."))
                 {
                     break;                                                  //Se il server scrive "Chiusura..." esci dal ciclo while (break).
