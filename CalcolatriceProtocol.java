@@ -1,8 +1,8 @@
 import java.util.regex.*;
 import java.math.*;
 public class CalcolatriceProtocol {
-	Pattern p = Pattern.compile("^(?<operando1>(?<intero1>[-+]?\\d+)\\.?(?<decimale1>\\d*))(?<operatore>[-+*/])(?<operando2>(?<intero2>[-+]?\\d+)\\.?(?<decimale2>\\d*))$");
-	//							^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	Pattern p = Pattern.compile("^(?<intero1>[-+]?\\d+)[\\.,]?(?<decimale1>\\d*)(?<operatore>[-+*/])(?<intero2>[-+]?\\d+)[\\.,]?(?<decimale2>\\d*)$");
+	//							^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	//							Espressione regolare. Serve a verificare che in input sia inserita un'operazione valida (come ad esempio 2+2).
 	//							Questa viene compilata in un'istanza della classe Pattern
 	public String elabora(String input)
