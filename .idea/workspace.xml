@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dd57518e-ff54-4de1-9d74-a9ea5f76d181" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/CalcolatriceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/CalcolatriceClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CalcolatriceServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/CalcolatriceServer.java" afterDir="false" />
-    </list>
+    <list default="true" id="dd57518e-ff54-4de1-9d74-a9ea5f76d181" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,8 +59,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CalcolatriceServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="729">
-              <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
+            <state relative-caret-position="707">
+              <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -225,8 +222,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CalcolatriceServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="729">
-          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
+        <state relative-caret-position="707">
+          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
