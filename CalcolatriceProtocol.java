@@ -1,10 +1,10 @@
 import java.util.regex.*;
 import java.math.*;
 public class CalcolatriceProtocol {
-	//Niente domande.
-	Pattern p = Pattern.compile("^(?<intero1>[-+]?\\d+)\\.?(?<decimale1>\\d*)(?<operatore>[-+*/])(?<intero2>[-+]?\\d+)\\.?(?<decimale2>\\d*)$");
-	//							^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	//							Pattern per espressioni regolari. Serve a verificare che in input sia inserita un'operazione valida (come ad esempio 2+2) e ignora spazi messi a caso
+	Pattern p = Pattern.compile("^(?<operando1>(?<intero1>[-+]?\\d+)\\.?(?<decimale1>\\d*))(?<operatore>[-+*/])(?<operando2>(?<intero2>[-+]?\\d+)\\.?(?<decimale2>\\d*))$");
+	//							^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	//							Espressione regolare. Serve a verificare che in input sia inserita un'operazione valida (come ad esempio 2+2).
+	//							Questa viene compilata in un'istanza della classe Pattern
 	public String elabora(String input)
 	{
 		if (input.equalsIgnoreCase("esci")){		//	Se input è uguale a "esci"
@@ -13,33 +13,19 @@ public class CalcolatriceProtocol {
 
 		String output;
 		input = input.replaceAll("\\s","");  //rimuove tutti gli spazi dalla stringa di input
-		Matcher m = p.matcher(input);	//Oggetto creato per verificare se la stringa inserita rispetta il pattern (cioè quella cosa lunghissima sopra)
-		if(m.find()) {
-			if (m.group("decimale1").isEmpty() && m.group("decimale2").isEmpty()) {		//if: controlla se entrambi i numeri inseriti sono interi (cioè senza parte decimale)
-				if (m.group("operatore").charAt(0) == '/') {								//if: controlla se l'operazione richiesta è una divisione
-					BigDecimal operando1 = new BigDecimal(m.group("intero1"));				//in caso affermativo istanzia 2 oggetti BigDecimal col valore dei numeri in input
-					BigDecimal operando2 = new BigDecimal(m.group("intero2"));				// (Cosa è BigDecimal? Semplicemente un float che non va mai in overflow, con valore illimitato)
-					if(operando2.compareTo(BigDecimal.ZERO) == 0) {			//Controlla se il divisore è uguale a 0
-						output = "Errore: impossibile dividere per zero.";	//In caso affermativo dà errore
-						return output;
-					} else {
-						//Se il divisore non è uguale a 0. Il parametro "15" indica il numero di cifre decimali da mostrare
-						//Il parametro successivo indica semplicemente che il risultato decimale viene arrotondato per eccesso
-						BigDecimal risultato = operando1.divide(operando2, 15, RoundingMode.HALF_UP);
-						//Il risultato viene messo in una stringa
-						output = operando1.toString() + ' ' + m.group("operatore") + ' ' + operando2.toString() + " = " + risultato.toString();
-					}
-				} else {
-					BigInteger operando1 = new BigInteger(m.group("intero1"));  //Se in input sono inseriti 2 numeri interi e non viene richiesta una divisione
-					BigInteger operando2 = new BigInteger(m.group("intero2"));	//allora vengono istanziati oggetti BigInteger
-					BigInteger risultato = null;								//(BigInteger è un int illimitato che non va mai in overflow)
-					switch (m.group("operatore").charAt(0)) {		//
-						case '+': {									//
-							risultato = operando1.add(operando2);	//In base all'operatore inserito viene svolta l'operazione apposita
-							break;									//(se inserito + va fatta la somma, se - la sottrazione ecc...)
-						}
-						case '-': {
-							risultato = operando1.subtract(operando2);
+		Matcher m = p.matcher(input);	//Oggetto creato per confrontare la stringa al Pattern
+		if(m.find()) {   //Controlla se l'oggetto Matcher trova una corrispondenza con il pattern (tramite il metodo booleano find())
+			if (m.group("decimale1").isEmpty() && m.group("decimale2").isEmpty() && (m.group("operatore").charAt(0) != '/')) {	//controlla se entrambi i numeri sono interi e se l'operazione richiesta non è la divisione
+					BigInteger operando1 = new BigInteger(m.group("intero1"));  //In caso affermativo vengono istanziati oggetti BigInteger
+					BigInteger operando2 = new BigInteger(m.group("intero2"));	//
+					BigInteger risultato = null;								//
+					switch (m.group("operatore").charAt(0)) {			//
+						case '+': {										//
+							risultato = operando1.add(operando2);		//In base all'operatore inserito viene svolta l'operazione apposita
+							break;										//(se inserito + va fatta la somma, se - la sottrazione ecc...)
+						}												//
+						case '-': {										//
+							risultato = operando1.subtract(operando2);	//
 							break;
 						}
 						case '*': {
@@ -48,12 +34,11 @@ public class CalcolatriceProtocol {
 						}
 					}
 					output = operando1.toString() + ' ' + m.group("operatore") + ' ' + operando2.toString() + " = " + risultato.toString();
+					return output;
 				}
-				return output;
-			}
 
-			BigDecimal operando1 = new BigDecimal(m.group("intero1") + '.' + m.group("decimale1"));	//Se i numeri sono decimali allora istanzia BigDecimal
-			BigDecimal operando2 = new BigDecimal(m.group("intero2") + '.' + m.group("decimale2"));
+			BigDecimal operando1 = new BigDecimal(m.group("intero1") + '.' + m.group("decimale1"));	//Se almeno uno dei due operandi ha la parte decimale
+			BigDecimal operando2 = new BigDecimal(m.group("intero2") + '.' + m.group("decimale2")); //allora istanzia BigDecimal
 			BigDecimal risultato = null;
 			switch (m.group("operatore").charAt(0)) {
 				case '+': {
@@ -81,7 +66,7 @@ public class CalcolatriceProtocol {
 			}
 			output = operando1.toString() + ' ' + m.group("operatore") + ' ' + operando2.toString() + " = " + risultato.toString();
 			return output;
-		}	else output = "Errore: espressione non valida."; //vuoto
+		}	else output = "Errore: espressione non valida.";
 		return output;
 	}
 }
